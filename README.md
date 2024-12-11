@@ -62,7 +62,7 @@ Used as the start and the end of the laser maze game by utilizing 2 RF cards tha
 ### Implementation:
 1. Connect the RFID module to the Arduino using SPI as shown in their respective documentation
 2.  Connect the I2C LCD to the Arduino as shown in their respective documentation.
-3. Predefine the UIDs of RFID cards for specific functions:
+3. Predefine the UIDs of RFID cards for specific functions by using the "dumpinfo" from the MFRC522 library:
    - One card for **Start/Pause**.
    - Another card for **Stop/Reset**.
 4. When an RFID card is scanned:
