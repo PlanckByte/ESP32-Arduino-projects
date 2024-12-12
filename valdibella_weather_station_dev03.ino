@@ -1,4 +1,4 @@
-//Weather Station Test Code
+//Weather Station Test Code. This is a sample code to overview how to weather station project works. It has been tested in lab environment and also rural environment. A slight different version with some fixes at lux was used in the actual pilot.
 //Definitions, Libraries and Constants
 #include <Wire.h>
 #include <Adafruit_Sensor.h>
@@ -20,11 +20,11 @@
 int moistPin4 = 39; // Only one moisture sensor connected to pin 39
 
 // WiFi credentials
-const char* ssid = "ATTESTED_3";
-const char* password = "u8eb6vhk";
+const char* ssid = "your_SSID";
+const char* password = "your_pass";
 //server 
-const char* server = "89.58.4.230";
-const int port = 1026;
+const char* server = "your_server_IP";
+const int port = 1026; //use your server port
 
 //I2C initiations
 Adafruit_BME280 bme;
@@ -79,8 +79,8 @@ void setup() {
     // Initialize sensors
     bme.begin(0x76);
     tsl.begin();
-    tsl.setGain(TSL2591_GAIN_LOW); // Lux sensor gain
-    tsl.setTiming(TSL2591_INTEGRATIONTIME_100MS); // Lux sensor integration time 
+    tsl.setGain(TSL2591_GAIN_LOW); // Lux sensor gain. You may need to use different gains. Check sensor documentation
+    tsl.setTiming(TSL2591_INTEGRATIONTIME_100MS); // Lux sensor integration time .You may need to use different intergration times. Check sensor documentation
     sensors.begin();
     uv.begin(VEML6070_1_T);
     
@@ -132,7 +132,7 @@ void getAndDisplayData() {
 
     // Read and print luminosity from TSL2591
     Serial.println("Luminosity:");
-    uint32_t lum = tsl.getFullLuminosity(); //32-bit unsigned integer containing full spectrumw
+    uint32_t lum = tsl.getFullLuminosity(); //32-bit unsigned integer containing full spectrum
     uint16_t ir, full; //two 16-bit unsigned integer variables  used to store the IR and full spectrum light data extracted from the 'lum' variable.
     ir = lum >> 16;
     full = lum & 0xFFFF;
@@ -150,7 +150,7 @@ void getAndDisplayData() {
     printSoilMoistureCondition(soilMoistureValue);
 }
 
-void printSoilMoistureCondition(int soilMoistureValue) {
+void printSoilMoistureCondition(int soilMoistureValue) { //moisture sensor calibrated using 4 different water levels in soil. 
     if (soilMoistureValue >= 2350) {
         Serial.println("Soil Moisture: Dry Soil");
     } else if (soilMoistureValue < 1800) {
@@ -243,7 +243,7 @@ void connectToServer() {
     payload += "\"soilMoisture\":{\"value\":" + String(soilMoistureValue) + ",\"type\":\"Number\"},";
     payload += "\"timestamp\":{\"value\":\"" + String(millis()) + "\",\"type\":\"Text\"}";
     payload += "}";
-
+//It uploads to the url I have specified. It wil need to be changed for your applications
     String url = "/v2/entities";
     client.print(String("POST ") + url + " HTTP/1.1\r\n" +
                  "Host: " + server + "\r\n" +
@@ -266,7 +266,7 @@ void connectToServer() {
     client.stop();
 }
 
-// Function to print wind direction based on analog reading
+// Function to print wind direction based on analog reading for my setup and circuit.
 void printWindDirection(int direction) {
     if (direction >= 170 && direction <= 270) {
         Serial.println("Wind Direction: E");
