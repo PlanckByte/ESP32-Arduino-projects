@@ -13,6 +13,7 @@ DRG4FOOD. In order to use this code you must set up the HTTP request to your ser
 - **Custom Circuitry**: Handles sensor connections and signal stabilization.
 ## Missing Features anb bugs
 Currently the data uploading lack security features or authentication techniques since everything was used in a test environment. The upload also lacks any retry logic in case of failure.
+
 **Known Bugs**:
 - **Issue**: The code seems to randomly skip some entries, likely due to inconsistencies in the 4G connection, especially if it drops or experiences intermittent disruptions.
   
@@ -46,6 +47,9 @@ All the sensors were calibrated as accurately as possible before everything was 
 5. **Soil Sensors**:
    - **DS18B20**: Monitors soil temperature.
    - **Gravity Capacitive Sensor**: Measures soil water content.
+
+6. **Modem** :
+   - TP-Link WiFi Router N300 TL-MR 6400 4G
 
 ## Code Overview:
 
